@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Services\LeaderboardService;
 use App\Http\Requests\CreateLeaderboardRequest;
 use App\Http\Requests\UpdateLeaderboardRequest;
+use App\Services\MatchService;
 
 class LeaderboardController extends Controller
 {
     private $leaderboardService;
+    private $matchService;
 
-    public function __construct(LeaderboardService $leaderboardService)
+    public function __construct(LeaderboardService $leaderboardService, MatchService $matchService)
     {
         $this->leaderboardService = $leaderboardService;
+        $this->matchService = $matchService;
     }
 
     public function index()
@@ -47,7 +50,14 @@ class LeaderboardController extends Controller
         return response(null, 204);
     }
 
-    public function membersIndex($leaderboardId)
+    public function matches($leaderboardId)
+    {
+        $matches = $this->matchService->findByLeaderboardId($leaderboardId);
+
+        return response()->json($matches);
+    }
+
+    public function members($leaderboardId)
     {
         $members = $this->leaderboardService->findMembers($leaderboardId);
 
