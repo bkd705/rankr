@@ -47,10 +47,19 @@ class LeaderboardController extends Controller
         return response(null, 204);
     }
 
-    public function members($leaderboardId)
+    public function membersIndex($leaderboardId)
     {
         $members = $this->leaderboardService->findMembers($leaderboardId);
 
         return response()->json($members);
+    }
+
+    public function updateMembers(Request $request, $leaderboardId)
+    {
+        $members = $request->input('members');
+
+        $this->leaderboardService->updateMembers($leaderboardId, $members);
+
+        return response()->json(null, 204);
     }
 }

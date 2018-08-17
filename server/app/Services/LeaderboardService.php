@@ -50,4 +50,13 @@ class LeaderboardService
 
         return $leaderboard->members;
     }
+
+    public function updateMembers($id, $members)
+    {
+        $leaderboard = Leaderboard::find($id);
+
+        $leaderboard->syncMembers($members);
+
+        return $leaderboard;
+    }
 }

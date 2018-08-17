@@ -46,4 +46,9 @@ class Leaderboard extends Model
 
         $this->save();
     }
+
+    public function syncMembers($members = [])
+    {
+        $this->members()->sync($members);
+    }
 }
