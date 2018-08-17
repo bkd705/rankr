@@ -21,7 +21,6 @@ Route::get('password/reset', 'AuthController@reset');
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('logout', 'AuthController@logout');
 
-    Route::get('test', function () {
-        return response()->json(['foo' => 'bar']);
-    });
+    Route::resource('leaderboard', 'LeaderboardController')->except(['edit', 'create']);
+    Route::get('leaderboard/{leaderboardId}/members', 'LeaderboardController@members');
 });

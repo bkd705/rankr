@@ -43,4 +43,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function leaderboards()
+    {
+        return $this->belongsToMany(App\Models\Leaderboard::class, 'leaderboards_member', 'member_id', 'leaderboard_id');
+    }
 }
