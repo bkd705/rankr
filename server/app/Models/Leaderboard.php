@@ -29,6 +29,11 @@ class Leaderboard extends Model
         return $this->belongsToMany(User::class, 'leaderboards_member', 'leaderboard_id', 'member_id')->withPivot('points');
     }
 
+    public function matches()
+    {
+        $this->hasMany(Match::class);
+    }
+
     public function addMembers($members = [])
     {
         collect($members)->map(function ($member) {

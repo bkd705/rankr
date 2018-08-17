@@ -24,4 +24,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('leaderboard', 'LeaderboardController')->except(['edit', 'create']);
     Route::get('leaderboard/{leaderboardId}/members', 'LeaderboardController@membersIndex');
     Route::put('leaderboard/{leaderboardid}/members', 'LeaderboardController@updateMembers');
+
+    Route::resource('match', 'MatchController')->except(['edit', 'create', 'destroy']);
 });
