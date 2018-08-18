@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Match;
+use App\Events\MatchCompleted;
 
 class MatchService
 {
@@ -22,7 +23,9 @@ class MatchService
 
     public function create($fields)
     {
-        return Match::create($fields);
+        $match = Match::create($fields);
+
+        event(new MatchCompleted($match));
     }
 
     public function update($changes, $id)

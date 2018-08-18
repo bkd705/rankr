@@ -25,7 +25,9 @@ class CreateLeaderboardRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'win_multiplier' => 'required|min:0',
+            'loss_multiplier' => 'required|min:0'
         ];
     }
 }

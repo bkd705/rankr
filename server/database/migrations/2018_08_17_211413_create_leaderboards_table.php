@@ -18,6 +18,8 @@ class CreateLeaderboardsTable extends Migration
             $table->unsignedInteger('creator_id');
             $table->string('title');
             $table->text('description');
+            $table->float('win_multiplier');
+            $table->float('loss_multiplier');
             $table->timestamps();
         });
     }

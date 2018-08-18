@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Leaderboard extends Model
 {
     protected $fillable = [
-        'title', 'description', 'creator_id'
+        'title', 'description', 'creator_id', 'win_multiplier', 'loss_multiplier'
     ];
 
     public static function boot()
@@ -26,7 +26,7 @@ class Leaderboard extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'leaderboards_member', 'leaderboard_id', 'member_id')->withPivot('points');
+        return $this->belongsToMany(User::class, 'leaderboards_member', 'leaderboard_id', 'member_id')->using(Player::class)->withPivot('points');
     }
 
     public function matches()

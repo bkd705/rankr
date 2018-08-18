@@ -23,6 +23,9 @@ class UpdateLeaderboardRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'win_multiplier' => 'min:0',
+            'loss_multiplier' => 'min:0'
+        ];
     }
 }
