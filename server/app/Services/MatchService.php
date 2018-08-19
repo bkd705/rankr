@@ -13,7 +13,7 @@ class MatchService
 
     public function findById($id)
     {
-        return Match::find($id);
+        return Match::findOrFail($id);
     }
 
     public function findByLeaderboardId($leaderboardId)

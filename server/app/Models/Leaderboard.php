@@ -14,8 +14,8 @@ class Leaderboard extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('memberCount', function ($builder) {
-            $builder->withCount('members');
+        static::addGlobalScope('playerCount', function ($builder) {
+            $builder->withCount('players');
         });
     }
 
@@ -24,9 +24,9 @@ class Leaderboard extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function members()
+    public function players()
     {
-        return $this->belongsToMany(User::class, 'leaderboards_member', 'leaderboard_id', 'member_id')->using(Player::class)->withPivot('points');
+        return $this->belongsToMany(User::class, 'leaderboards_player', 'leaderboard_id', 'player_id')->using(Player::class)->withPivot('points');
     }
 
     public function matches()
@@ -34,35 +34,36 @@ class Leaderboard extends Model
         $this->hasMany(Match::class);
     }
 
-    public function addMembers($members = [])
+    public function addPlayers($players = [])
     {
-        collect($members)->map(function ($member) {
-            $this->members()->attach($member, [ 'points' => 0 ]);
+        collect($players)->map(function ($player) {
+            $this->players()->attach($player, [ 'points' => 0 ]);
         });
 
         $this->save();
     }
 
-    public function removeMembers($members = [])
+    public function removePlayers($players = [])
     {
-        collect($members)->map(function ($member) {
-            $this->members()->detach($member);
+        collect($players)->map(function ($player) {
+            $this->players()->detach($player);
         });
 
         $this->save();
     }
 
-    public function syncMembers($members = [])
+    public function syncPlayers($players = [])
     {
-        $this->members()->sync($members);
+        $this->players()->sync($players);
     }
 
     public function updateRanks($match)
     {
-        $winner = $this->members()->find($match->winner_id);
+        $winner = $this->players()->find($match->winner_id);
         $winnerRank = $winner->pivot->getRank();
 
-        $loser = $this->members()->find($match->loser_id);
+
+        $loser = $this->players()->find($match->loser_id);
         $loserRank = $loser->pivot->getRank();
 
         $sorted = collect([$loserRank, $winnerRank])->sort()->values()->all();

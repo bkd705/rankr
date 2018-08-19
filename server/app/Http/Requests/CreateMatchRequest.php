@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validate\Rule;
 
 class CreateMatchRequest extends FormRequest
 {
@@ -23,10 +24,20 @@ class CreateMatchRequest extends FormRequest
      */
     public function rules()
     {
+        $existsInLeaderboardRule = function ($attribute, $value, $fail) {
+            $leaderboard = \App\Models\Leaderboard::find($this->input('leaderboard_id'));
+
+            $player = $leaderboard->players()->find($value);
+
+            if (!$player) {
+                $fail(':attribute is not a player on this leaderboard.');
+            }
+        };
+
         return [
             'leaderboard_id' => 'required|exists:leaderboards,id',
-            'winner_id' => 'required|exists:users,id',
-            'loser_id' => 'required|exists:users,id',
+            'winner_id' => ['required', $existsInLeaderboardRule],
+            'loser_id' => ['required', $existsInLeaderboardRule],
             'winner_score' => 'required',
             'loser_score' => 'required'
         ];

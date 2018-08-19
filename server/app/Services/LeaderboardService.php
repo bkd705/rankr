@@ -12,7 +12,7 @@ class LeaderboardService
 
     public function findById($id)
     {
-        return Leaderboard::find($id);
+        return Leaderboard::findOrFail($id);
     }
 
     public function create($fields)
@@ -25,42 +25,40 @@ class LeaderboardService
           'creator_id' => auth()->user()->id
         ]);
 
-        $leaderboard->addMembers($fields['members']);
+        if (array_key_exists('players', $fields)) {
+            $leaderboard->addPlayers($fields['players']);
+        }
 
         return $leaderboard;
     }
 
     public function update($id, $changes)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::findOrFail($id);
 
         $leaderboard->update($changes);
-
-        $leaderboard->syncMembers($changes['members']);
 
         return $leaderboard;
     }
 
     public function delete($id)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::findOrFail($id);
 
         return $leaderboard->delete();
     }
 
-    public function findMembers($id)
+    public function findPlayers($id)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::findOrFail($id);
 
-        return $leaderboard->members;
+        return $leaderboard->players;
     }
 
-    public function updateMembers($id, $members)
+    public function addPlayer($id, $playerId)
     {
-        $leaderboard = Leaderboard::find($id);
+        $leaderboard = Leaderboard::findOrFail($id);
 
-        $leaderboard->syncMembers($members);
-
-        return $leaderboard;
+        $leaderboard->addPlayers([$playerId]);
     }
 }

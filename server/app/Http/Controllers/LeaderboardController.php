@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\MatchService;
 use App\Services\LeaderboardService;
 use App\Http\Requests\CreateLeaderboardRequest;
 use App\Http\Requests\UpdateLeaderboardRequest;
-use App\Services\MatchService;
 
 class LeaderboardController extends Controller
 {
@@ -57,18 +57,18 @@ class LeaderboardController extends Controller
         return response()->json($matches);
     }
 
-    public function members($leaderboardId)
+    public function players($leaderboardId)
     {
-        $members = $this->leaderboardService->findMembers($leaderboardId);
+        $players = $this->leaderboardService->findPlayers($leaderboardId);
 
-        return response()->json($members);
+        return response()->json($players);
     }
 
-    public function updateMembers(Request $request, $leaderboardId)
+    public function addPlayer(Request $request, $leaderboardId)
     {
-        $members = $request->input('members');
+        $playerId = $request->input('player_id');
 
-        $this->leaderboardService->updateMembers($leaderboardId, $members);
+        $this->leaderboardService->addPlayer($leaderboardId, $playerId);
 
         return response()->json(null, 204);
     }
