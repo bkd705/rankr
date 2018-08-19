@@ -24,7 +24,7 @@ class MainHeader extends React.Component {
 
     return (
         <Header>
-          <p>rankr</p>
+          <p><strong>rankr</strong></p>
           <UserIcon src={ brennen } size={ icon.md }/>
         </Header>
     )

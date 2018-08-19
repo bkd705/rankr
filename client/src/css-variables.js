@@ -1,5 +1,5 @@
 export const size = {
-  contentWidth: '1140px'
+  contentWidth: '1440px'
 }
 
 export const color = {

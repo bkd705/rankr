@@ -7,15 +7,15 @@ import styled from 'styled-components'
 import { fontSize, spacing, icon } from './../../css-variables'
 
 const Table = styled.table `
-  padding: ${spacing.lg} 0;
+  padding: 0 0 ${spacing.md};
   font-size: ${fontSize.sm};
   text-align: left;
 `
 
 const TRow = styled.tr `
   display: grid;
-  grid-template-columns: 300px 1fr 1fr;
-  grid-gap: ${spacing.md};
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-gap: ${spacing.xs};
   margin-bottom: ${spacing.xs};
   align-items: center;
 `

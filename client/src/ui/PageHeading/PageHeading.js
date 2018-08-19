@@ -6,6 +6,7 @@ import { fontSize, color } from '../../css-variables'
 
 const Header = styled.header `
   text-align: center;
+  grid-column: 1 / -1;
 `
 
 const SubHeading = styled.h2 `
@@ -18,7 +19,7 @@ class PageHeading extends React.Component {
     const { heading, subheading } = this.props
     return (
         <Header>
-          <H level={ 1 }>{ heading }</H>
+          <H level={ 1 }><strong>{ heading }</strong></H>
           <SubHeading>{ subheading }</SubHeading>
         </Header>
     )
