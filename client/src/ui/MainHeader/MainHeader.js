@@ -3,7 +3,7 @@ import UserIcon from '../UserIcon/UserIcon'
 import brennen from './../../assets/brennen.jpg'
 
 import styled from 'styled-components'
-import { size, fontSize, header, icon } from '../../css-variables'
+import { size, fontSize, header, icon, spacing } from '../../css-variables'
 
 const Header = styled.header `
   height: ${header.height};
@@ -16,12 +16,14 @@ const Header = styled.header `
   p {
     font-size: ${fontSize.lg};
   }
+
+  @media only screen and (max-width: 1050px) {
+    padding: 0 ${spacing.md};
+  }
 `
 
 class MainHeader extends React.Component {
   render() {
-    const { children, ...props } = this.props
-
     return (
         <Header>
           <p><strong>rankr</strong></p>

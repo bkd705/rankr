@@ -30,6 +30,11 @@ const Main = styled.main `
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
+
+  @media only screen and (max-width: 1050px) {
+    padding: 0 ${spacing.md};
+    grid-template-columns: 1fr;
+  }
 `
 
 class Dashboard extends React.Component {
