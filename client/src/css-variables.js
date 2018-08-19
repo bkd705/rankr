@@ -1,3 +1,7 @@
+export const size = {
+  contentWidth: '1140px'
+}
+
 export const color = {
   primary: '#5FADE9',
   secondary: '#9368FB',
@@ -20,13 +24,21 @@ export const spacing = {
   lg: '2rem',
   md: '1.5rem',
   sm: '1rem',
-  xs: '.5rem'
+  xs: '.5rem',
 }
 
 export const icon = {
   sm: '35px',
   md: '50px',
-  lg: '75px'
+  lg: '75px',
+}
+
+export const input = {
+  height: '30px',
+}
+
+export const header = {
+  height: '75px',
 }
 
 export default {
@@ -34,4 +46,6 @@ export default {
   fontSize,
   spacing,
   icon,
+  input,
+  header,
 }

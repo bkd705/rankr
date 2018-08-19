@@ -9,9 +9,6 @@ import { fontSize, spacing, icon } from './../../css-variables'
 const Table = styled.table `
   padding: ${spacing.lg} 0;
   font-size: ${fontSize.sm};
-`
-
-const TBody = styled.tbody `
   text-align: left;
 `
 
@@ -38,18 +35,20 @@ class LeaderBoard extends React.Component {
     const { name, description, members, topRank } = this.props.leaderboard
     return (
         <Table>
-          <TBody>
+          <thead>
             <TRow>
               <th><Link href="#">{ name }</Link></th> 
               <th>Members</th>
               <th>Top Rank</th>
             </TRow>
+          </thead>
+          <tbody>
             <TRow>
               <td>{ description }</td>
               <TData count={ members.length }><MembersCount members={ members } iconSize={ icon.sm }>{ members.length }</MembersCount><span>{ members.length }</span></TData>
               <TData><User src={ topRank.img } name={ topRank.name } iconSize={ icon.sm } /></TData>
             </TRow>
-          </TBody>
+          </tbody>
         </Table>
     )
   }
