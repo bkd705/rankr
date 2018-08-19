@@ -56,4 +56,23 @@ class Leaderboard extends Model
     {
         $this->members()->sync($members);
     }
+
+    public function updateRanks($match)
+    {
+        $winner = $this->members()->find($match->winner_id);
+        $winnerRank = $winner->pivot->getRank();
+
+        $loser = $this->members()->find($match->loser_id);
+        $loserRank = $loser->pivot->getRank();
+
+        $sorted = collect([$loserRank, $winnerRank])->sort()->values()->all();
+        $diff = $sorted[1] - $sorted[0];
+
+        if ($winnerRank > $loserRank) {
+            $diff = $diff / 2;
+        }
+
+        $winner->pivot->increasePointsBy($diff * $this->win_multiplier);
+        $loser->pivot->decreasePointsBy($diff * $this->loss_multiplier);
+    }
 }

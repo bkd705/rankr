@@ -25,13 +25,7 @@ class MatchService
     {
         $match = Match::create($fields);
 
-        event(new MatchCompleted($match));
-    }
-
-    public function update($changes, $id)
-    {
-        $match = Match::find($id);
-
-        return $match->update($changes);
+        $leaderboard = $match->leaderboard;
+        $leaderboard->updateRanks($match);
     }
 }

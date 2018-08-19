@@ -36,6 +36,8 @@ class LeaderboardService
 
         $leaderboard->update($changes);
 
+        $leaderboard->syncMembers($changes['members']);
+
         return $leaderboard;
     }
 

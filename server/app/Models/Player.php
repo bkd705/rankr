@@ -14,17 +14,17 @@ class Player extends Pivot
             return $player->id == $this->member_id;
         });
 
-        return $rank || 0;
+        return $rank ?: 0;
     }
 
-    public function increasePoints($pointsToAdd)
+    public function increasePointsBy($pointsToAdd)
     {
         $this->points += $pointsToAdd;
 
         $this->save();
     }
 
-    public function decreasePoints($pointsToRemove)
+    public function decreasePointsBy($pointsToRemove)
     {
         if ($this->points <= 0) {
             return;

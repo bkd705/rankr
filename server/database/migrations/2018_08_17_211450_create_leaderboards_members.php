@@ -17,7 +17,7 @@ class CreateLeaderboardsMembers extends Migration
             $table->increments('id');
             $table->unsignedInteger('member_id');
             $table->unsignedInteger('leaderboard_id');
-            $table->float('points');
+            $table->float('points')->default(0);
             $table->timestamps();
         });
     }
