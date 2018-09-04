@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Leaderboard extends Model
 {
+    const KFACTOR = 30;
+
     protected $fillable = [
         'title', 'description', 'creator_id', 'win_multiplier', 'loss_multiplier'
     ];
@@ -60,20 +62,36 @@ class Leaderboard extends Model
     public function updateRanks($match)
     {
         $winner = $this->players()->find($match->winner_id);
-        $winnerRank = $winner->pivot->getRank();
-
-
         $loser = $this->players()->find($match->loser_id);
-        $loserRank = $loser->pivot->getRank();
 
-        $sorted = collect([$loserRank, $winnerRank])->sort()->values()->all();
-        $diff = $sorted[1] - $sorted[0];
+        $winnerCurrentRating = $winner->pivot->points;
+        $loserCurrentRating = $loser->pivot->points;
 
-        if ($winnerRank > $loserRank) {
-            $diff = $diff / 2;
+        $winnerProbability = $this->calculateProbability($winnerCurrentRating, $loserCurrentRating);
+        $loserProbability = $this->calculateProbability($loserCurrentRating, $winnerCurrentRating);
+
+        $winnerRating = $this->calculateRating(1, $winnerProbability, $winnerCurrentRating);
+        $loserRating = $this->calculateRating(0, $loserProbability, $loserCurrentRating);
+
+        $winner->pivot->points = floor($winnerRating);
+        $winner->pivot->save();
+
+        if ($loserRating < 0) {
+            $loser->pivot->points = 0;
+            $loser->pivot->save();
+        } else {
+            $loser->pivot->points = floor($loserRating);
+            $loser->pivot->save();
         }
+    }
 
-        $winner->pivot->increasePointsBy($diff * $this->win_multiplier);
-        $loser->pivot->decreasePointsBy($diff * $this->loss_multiplier);
+    private function calculateRating($actual, $expected, $rating)
+    {
+        return $rating + (SELF::KFACTOR * ($actual - $expected));
+    }
+
+    private function calculateProbability($pointsA, $pointsB)
+    {
+        return 1.0 / (1.0 + pow(10, (($pointsB - $pointsA) / 400)));
     }
 }
