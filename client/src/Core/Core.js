@@ -3,7 +3,7 @@ import * as leaderboards from './Leaderboards'
 import * as users from './Users'
 
 export const CoreAxios = axios.create({
-  baseURL: 'http://rankr.test/api'
+  baseURL: process.env.REACT_APP_BASE_URL
 })
 
 export default {

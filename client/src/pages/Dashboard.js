@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
         <section>
           <Header>
             <H level="2">Leaderboards</H>
-            <Button>+ New</Button>
+            <Button special>+ New</Button>
           </Header>
           <UnorderedList>
             <ListItem>
