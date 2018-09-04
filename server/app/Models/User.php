@@ -29,6 +29,8 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    protected $appends = ['gravatar'];
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);
@@ -42,6 +44,13 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getGravatarAttribute()
+    {
+        $hash = md5(strtolower($this->email));
+
+        return 'https://gravatar.com/avatar/' . $hash . '.jpg?d=retro';
     }
 
     public function leaderboards()
