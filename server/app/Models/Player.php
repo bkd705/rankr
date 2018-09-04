@@ -6,17 +6,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Player extends Pivot
 {
-    public function getRank()
-    {
-        $allPlayers = Player::orderBy('points', 'asc')->get();
-
-        $rank = $allPlayers->search(function ($player) {
-            return $player->id == $this->member_id;
-        });
-
-        return $rank ?: 0;
-    }
-
     public function increasePointsBy($pointsToAdd)
     {
         $this->points += $pointsToAdd;

@@ -20,8 +20,6 @@ class LeaderboardService
         $leaderboard = Leaderboard::create([
           'title' => $fields['title'],
           'description' => $fields['description'],
-          'win_multiplier' => $fields['win_multiplier'],
-          'loss_multiplier' => $fields['loss_multiplier'],
           'creator_id' => auth()->user()->id
         ]);
 
