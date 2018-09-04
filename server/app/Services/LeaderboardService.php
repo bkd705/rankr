@@ -7,7 +7,7 @@ class LeaderboardService
 {
     public function findAll()
     {
-        return Leaderboard::all();
+        return Leaderboard::with('players')->get();
     }
 
     public function findById($id)
