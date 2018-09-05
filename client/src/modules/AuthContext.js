@@ -21,12 +21,16 @@ export class AuthProvider extends React.Component {
         logout: this.logout
       }
     }
+
+    const token = localStorage.getItem('user_token')
+    if (token) {
+      this.setupAxios(token)
+    }
   }
 
   static getDerivedStateFromProps(props, state) {
     const token = localStorage.getItem('user_token')
     if (token) {
-      CoreAxios.defaults.headers.common.Authorization = `Bearer ${token}`
       return {
         currentUser: {
           token
@@ -41,9 +45,23 @@ export class AuthProvider extends React.Component {
     return state
   }
 
+  setupAxios = token => {
+    CoreAxios.defaults.headers.common.Authorization = `Bearer ${token}`
+    CoreAxios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response.status === 401) {
+          this.logout()
+        }
+
+        Promise.reject(error)
+      }
+    )
+  }
+
   login = token => {
     localStorage.setItem('user_token', token)
-    CoreAxios.defaults.headers.common.Authorization = `Bearer ${token}`
+    this.setupAxios(token)
     this.setState({
       currentUser: {
         token

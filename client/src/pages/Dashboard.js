@@ -43,11 +43,15 @@ class Dashboard extends React.Component {
   }
 
   async componentDidMount() {
-    const leaderboards = await Core.leaderboards.index()
+    try {
+      const leaderboards = await Core.leaderboards.index()
 
-    this.setState({
-      leaderboards: leaderboards.data
-    })
+      this.setState({
+        leaderboards: leaderboards.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {

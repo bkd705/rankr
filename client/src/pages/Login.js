@@ -24,7 +24,6 @@ const Login = ({ history }) => {
         <Form
           onSubmit={async values => {
             const response = await Core.users.login(values)
-            console.log(response)
 
             if (response.status === 200) {
               login(response.data.data.token)
