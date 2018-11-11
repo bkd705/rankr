@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\MatchService;
 use App\Services\LeaderboardService;
 use App\Http\Requests\CreateLeaderboardRequest;
 use App\Http\Requests\UpdateLeaderboardRequest;
@@ -11,17 +10,15 @@ use App\Http\Requests\UpdateLeaderboardRequest;
 class LeaderboardController extends Controller
 {
     private $leaderboardService;
-    private $matchService;
 
-    public function __construct(LeaderboardService $leaderboardService, MatchService $matchService)
+    public function __construct(LeaderboardService $leaderboardService)
     {
         $this->leaderboardService = $leaderboardService;
-        $this->matchService = $matchService;
     }
 
     public function index()
     {
-        return $this->leaderboardService->findAll();
+        return $this->leaderboardService->findAllForAuthUser();
     }
 
     public function show($leaderboardId)
@@ -48,13 +45,6 @@ class LeaderboardController extends Controller
         $this->leaderboardService->delete($leaderboardId);
 
         return response(null, 204);
-    }
-
-    public function matches($leaderboardId)
-    {
-        $matches = $this->matchService->findByLeaderboardId($leaderboardId);
-
-        return response()->json($matches);
     }
 
     public function players($leaderboardId)

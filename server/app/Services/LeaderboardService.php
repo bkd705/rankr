@@ -10,6 +10,14 @@ class LeaderboardService
         return Leaderboard::with('players')->get();
     }
 
+    public function findAllForAuthUser()
+    {
+        return auth()->user()
+            ->leaderboards()
+            ->with('players')
+            ->get();
+    }
+
     public function findById($id)
     {
         return Leaderboard::findOrFail($id);

@@ -55,7 +55,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function leaderboards()
     {
-        return $this->belongsToMany(App\Models\Leaderboard::class, 'leaderboards_player', 'player_id', 'leaderboard_id')->using(Player::class)->withPivot('points');
+        return $this->belongsToMany(\App\Models\Leaderboard::class, 'leaderboards_player', 'player_id', 'leaderboard_id')->using(Player::class)->withPivot('points');
     }
 
     public function matches()

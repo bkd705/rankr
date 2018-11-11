@@ -17,17 +17,19 @@ class AuthService
             'password' => $credentials['password']
         ]);
 
-        return $user;
+        $token = auth()->login($user);
+
+        return $token;
     }
 
     public function login($credentials)
     {
-        try {
-            $token = auth()->attempt($credentials);
-            return [ 'token' => $token ];
-        } catch (JWTException $e) {
-            return [ 'error' => 'Failed to login, please try again' ];
+        $token = auth()->attempt($credentials);
+        if (!$token) {
+            return [ 'token' => null, 'error' => 'Failed to login, please try again' ];
         }
+
+        return [ 'token' => $token ];
     }
 
     public function logout($token)

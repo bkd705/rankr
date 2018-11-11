@@ -19,7 +19,7 @@ class Authentication extends TestCase
             'email' => $email,
             'name' => 'kungfu kenny',
             'password' => 'password123'
-        ])->assertStatus(201);
+        ])->assertStatus(200);
 
         $this->assertDatabaseHas('users', ['email' => $email]);
     }

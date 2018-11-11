@@ -9,13 +9,13 @@ import Link from '../ui/Link/Link'
 import AuthPanel from '../components/AuthPanel'
 import { spacing } from '../css-variables'
 
-const Login = ({ history }) => {
+const Register = ({ history }) => {
   return (
     <AuthConsumer>
       {({ login }) => (
         <Form
           onSubmit={async values => {
-            const response = await Core.users.login(values)
+            const response = await Core.users.register(values)
 
             if (response.status === 200) {
               login(response.data.data.token)
@@ -25,7 +25,13 @@ const Login = ({ history }) => {
           render={({ handleSubmit, pristine, invalid }) => (
             <AuthPanel>
               <form onSubmit={handleSubmit}>
-                <H level={2}>Login</H>
+                <H level={2}>Register</H>
+                <Input
+                  labelHidden
+                  name="name"
+                  label="Name"
+                  placeholder="Name"
+                />
                 <Input
                   labelHidden
                   name="email"
@@ -41,9 +47,9 @@ const Login = ({ history }) => {
                 />
 
                 <Button type="submit" primary fullWidth mb={spacing.sm}>
-                  Login
+                  Register
                 </Button>
-                <Link to="/register">Don't have an account?</Link>
+                <Link to="/login">Go Back</Link>
               </form>
             </AuthPanel>
           )}
@@ -53,4 +59,4 @@ const Login = ({ history }) => {
   )
 }
 
-export default Login
+export default Register

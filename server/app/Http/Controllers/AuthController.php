@@ -25,9 +25,9 @@ class AuthController extends Controller
     {
         $credentials = $request->only('name', 'email', 'password');
 
-        $this->authService->register($credentials);
+        $token = $this->authService->register($credentials);
 
-        return response(null, 201);
+        return response(['data' => [ 'token' => $token ]], 200);
     }
 
     public function login(LoginRequest $request)
@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         $auth = $this->authService->login($credentials);
 
-        if (!$auth['token']) {
+        if ($auth['token'] == null) {
             return response()->json(['success' => false, 'error' => $auth['error']], 401);
         }
 
